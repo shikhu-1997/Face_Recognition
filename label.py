@@ -1,0 +1,43 @@
+import cv2
+import numpy as np
+faceDetect=cv2.CascadeClassifier('/home/shikha/opencv-master/data/haarcascade_frontalface_default.xml')
+img1=cv2.imread('/home/shikha/Downloads/data/train/A/id1.jpg')
+img2=cv2.imread('/home/shikha/Downloads/data/train/A/id2.jpg')
+print("hol",img1)
+print("face",img2)
+cv2.imshow("Face",img1)
+cv2.imshow("Face1",img2)
+cv2.waitKey(0)
+id=input('enter user id')
+sampleNum=0;
+while(True):
+       gray=cv2.cvtColor(img1,cv2.COLOR_BGR2GRAY)
+       gray=cv2.cvtColor(img2,cv2.COLOR_BGR2GRAY)
+       faces=faceDetect.detectMultiScale(gray,1.2,5)
+       face_recognizer = cv2.face.createLBPHFaceRecognizer()
+       face_recognizer.train(faces, np.array(labels))
+       for(x,y,w,h) in faces:
+            sampleNum=sampleNum+1
+            cv2.imwrite("home/id1"+str(id)+"."+str(sampleNum)+".jpg")
+            cv2.imwrite("home/id2"+str(id)+"."+str(sampleNum)+".jpg")
+            cv2.rectangle(img,(x,y),(x+w,y+h),(0,0,255),2)
+            cv2.putText(img, text, (x, y), cv2.FONT_HERSHEY_PLAIN, 1.5, (0, 255, 0), 2)
+            img = test_img.copy()
+            face, rect = detect_face(img)
+            label= face_recognizer.predict(face)
+            label_text = subjects[label]
+            draw_rectangle(img, rect)
+            draw_text(img, label_text, rect[0], rect[1]-5)
+            print("Predicted image")
+            test_img1 = cv2.imread("home/Downloads/data/train/A/id1.jpg")
+            test_img2 = cv2.imread("home/Downloads/data/train/A/id2.jpg")
+            predicted_img1 = predict(test_img1)
+            predicted_img2 = predict(test_img2)
+            print("Prediction complete")
+            cv2.imshow(subjects[1], predicted_img1)
+            cv2.imshow(subjects[2], predicted_img2)
+            cv2.waitKey(100)
+            cv2.imshow("Face",img)
+            cv2.waitKey(0)
+cam.release()
+cv2.destroyAllWindows()
